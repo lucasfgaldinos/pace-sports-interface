@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { Slide, ToastContainer } from 'react-toastify';
 import { Login } from './containers/login';
 
+// import { Register } from './containers/register';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Login />

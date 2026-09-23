@@ -1,4 +1,11 @@
-export const Input = ({ label, placeholder, type = 'text', id, ...props }) => {
+export const Input = ({
+  label,
+  placeholder,
+  type = 'text',
+  id,
+  errorMessage = '',
+  ...props
+}) => {
   return (
     <div className="w-full mb-4">
       <label className="font-medium text-label text-sm" htmlFor={id}>
@@ -11,6 +18,11 @@ export const Input = ({ label, placeholder, type = 'text', id, ...props }) => {
         id={id}
         placeholder={placeholder}
       />
+      {errorMessage && (
+        <p className="h-0 text-pace-red text-[10px] tracking-wide">
+          {errorMessage}
+        </p>
+      )}
     </div>
   );
 };
