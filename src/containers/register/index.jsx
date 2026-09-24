@@ -1,15 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import loginBanner from '../../assets/login-banner.jpg';
+import loginBanner from '../../assets/login-960.webp';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
 import { api } from '../../services/api';
 
 export const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
   const schema = yup
     .object({
       name: yup
@@ -45,23 +48,38 @@ export const Register = () => {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const response = await api.post('/users', data);
+      const { status } = await api.post(
+        '/users',
+        {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        },
+        { validateStatus: () => true },
+      );
 
-      console.log(response);
+      function unlockButton() {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
 
-      toast.success('Cadastro realizado com sucesso!');
-
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log('Destravou o botão');
-      }, 2000);
+      if (status === 201) {
+        toast.success('Cadastro realizado com sucesso!');
+        navigate('/login');
+      } else if (status === 409) {
+        toast.error('Esse email já está sendo usado, faça login.');
+      } else if (status === 400) {
+        toast.error(
+          'Algo deu errado ao criar conta. Verifique seus dados e tente novamente.',
+        );
+      } else {
+        throw new Error();
+      }
+      unlockButton();
     } catch (_err) {
-      toast.error('Verifique seus dados e tente novamente.');
-
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log('Destravou o botão');
-      }, 2000);
+      toast.error('Algo inesperado deu errado.');
+      unlockButton();
     }
   };
 
@@ -135,7 +153,7 @@ export const Register = () => {
           </div>
 
           <div className="my-8">
-            <Button>Fazer login</Button>
+            <Button onClick={() => navigate('/login')}>Fazer login</Button>
           </div>
 
           <p className="text-[10px] text-neutral text-center">

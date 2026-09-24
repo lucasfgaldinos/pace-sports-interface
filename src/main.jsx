@@ -1,13 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router/dom';
 import { Slide, ToastContainer } from 'react-toastify';
-import { Login } from './containers/login';
-
-// import { Register } from './containers/register';
+import { router } from './routes';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Login />
+    <RouterProvider router={router} />
     <ToastContainer
       position="top-center"
       autoClose={5000}

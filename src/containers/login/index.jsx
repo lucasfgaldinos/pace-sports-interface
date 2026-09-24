@@ -1,15 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
-import loginBanner from '../../assets/login-banner.jpg';
+import loginBanner from '../../assets/login-960.webp';
+import logoPaceSports from '../../assets/pace-sports-branco-rascunho.png';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
 import { api } from '../../services/api';
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const schema = yup
     .object({
       email: yup
@@ -19,8 +22,7 @@ export const Login = () => {
         .required('O email é obrigatório'),
       password: yup
         .string()
-        .min(8, 'A senha deve ter no mínimo 8 caracteres')
-        .max(50, 'A senha não pode ter mais que 50 caracteres')
+        .max(100, 'A senha não pode ter mais que 100 caracteres')
         .required('A senha é obrigatória'),
     })
     .required();
@@ -36,23 +38,33 @@ export const Login = () => {
   const onSubmit = async (data) => {
     try {
       setIsLoading(true);
-      const response = await api.post('/sessions', data);
+      const { status } = await api.post(
+        '/sessions',
+        {
+          email: data.email,
+          password: data.password,
+        },
+        { validateStatus: () => true },
+      );
 
-      console.log(response);
+      function unlockButton() {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      }
 
-      toast.success('Seja muito bem-vindo(a)!');
-
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log('Destravou o botão');
-      }, 2000);
+      if (status === 200 || status === 201) {
+        toast.success('Seja muito bem-vindo(a)!');
+        navigate('/');
+      } else if (status === 401) {
+        toast.error('Email e/ou senha incorretos!');
+      } else {
+        throw new Error();
+      }
+      unlockButton();
     } catch (_err) {
-      toast.error('Verifique seus dados e tente novamente.');
-
-      setTimeout(() => {
-        setIsLoading(false);
-        console.log('Destravou o botão');
-      }, 2000);
+      toast.error('Algo inesperado deu errado.');
+      unlockButton();
     }
   };
 
@@ -62,9 +74,7 @@ export const Login = () => {
         className="bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: `url(${loginBanner})` }}
       >
-        <strong className="text-pace-white text-[50px] font-extrabold">
-          Pace Sports
-        </strong>
+        <img className="w-[50%]" src={logoPaceSports} alt="logo-pace-sports" />
       </section>
 
       <section className="flex items-center justify-center">
@@ -108,7 +118,7 @@ export const Login = () => {
           </div>
 
           <div className="my-8">
-            <Button>Cadastre-se</Button>
+            <Button onClick={() => navigate('/cadastro')}>Cadastre-se</Button>
           </div>
 
           <p className="text-[10px] text-neutral text-center">
