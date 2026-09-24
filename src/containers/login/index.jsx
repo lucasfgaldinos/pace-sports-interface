@@ -36,9 +36,15 @@ export const Login = () => {
   });
 
   const onSubmit = async (data) => {
+    function unlockButton() {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+
     try {
       setIsLoading(true);
-      const { status } = await api.post(
+      const response = await api.post(
         '/sessions',
         {
           email: data.email,
@@ -47,16 +53,12 @@ export const Login = () => {
         { validateStatus: () => true },
       );
 
-      function unlockButton() {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-      }
+      localStorage.setItem('token', response.data.token);
 
-      if (status === 200 || status === 201) {
+      if (response.status === 200 || response.status === 201) {
         toast.success('Seja muito bem-vindo(a)!');
         navigate('/');
-      } else if (status === 401) {
+      } else if (response.status === 401) {
         toast.error('Email e/ou senha incorretos!');
       } else {
         throw new Error();

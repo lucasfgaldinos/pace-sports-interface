@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import loginBanner from '../../assets/login-960.webp';
+import logoPaceSports from '../../assets/pace-sports-branco-rascunho.png';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
 import { api } from '../../services/api';
@@ -46,6 +47,12 @@ export const Register = () => {
   });
 
   const onSubmit = async (data) => {
+    function unlockButton() {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+
     try {
       setIsLoading(true);
       const { status } = await api.post(
@@ -57,12 +64,6 @@ export const Register = () => {
         },
         { validateStatus: () => true },
       );
-
-      function unlockButton() {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-      }
 
       if (status === 201) {
         toast.success('Cadastro realizado com sucesso!');
@@ -89,9 +90,7 @@ export const Register = () => {
         className="bg-cover bg-center flex items-center justify-center"
         style={{ backgroundImage: `url(${loginBanner})` }}
       >
-        <strong className="text-pace-white text-[50px] font-extrabold">
-          Pace Sports
-        </strong>
+        <img className="w-[50%]" src={logoPaceSports} alt="logo-pace-sports" />
       </section>
 
       <section className="flex items-center justify-center">
