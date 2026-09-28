@@ -1,6 +1,7 @@
 import { ArrowUpRight, Headset, Shield, Truck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import homeBanner from '../../assets/centro-esportivo-desktop-1536.webp';
 import { Button } from '../../components/button';
 import { api } from '../../services/api';
@@ -21,9 +22,8 @@ export const Home = () => {
         });
 
         setCategories(data);
-        console.log(data);
-      } catch (err) {
-        console.log(err.message);
+      } catch (_err) {
+        toast.error('Erro ao listar categorias.');
       }
     }
 
@@ -45,9 +45,11 @@ export const Home = () => {
             Performance e estilo para cada movimento. Equipamentos de alta
             tecnologia projetados para impulsionar seus limites.
           </p>
-          <div className="w-40">
-            <Button onClick={() => navigate('/produtos')}>Ver produtos</Button>
-          </div>
+
+          <Button size="fit" onClick={() => navigate('/produtos')}>
+            Ver produtos
+            <ArrowUpRight color="#F9F9FF" />
+          </Button>
         </div>
       </div>
 
@@ -73,19 +75,28 @@ export const Home = () => {
         <div className="grid grid-cols-3 gap-6 auto-rows-50">
           {categories.length > 0 &&
             categories.map((category) => (
+              // biome-ignore lint: false positive
               <div
                 key={category.id}
                 style={{ backgroundImage: `url('${category.url}')` }}
                 className="relative bg-cover bg-no-repeat bg-center rounded-2xl cursor-pointer"
+                onClick={() =>
+                  navigate({
+                    pathname: 'produtos',
+                    search: `?categoria=${category.id}`,
+                  })
+                }
               >
                 <div className="bg-dark/50 absolute inset-0 rounded-2xl" />
 
                 <p className="text-pace-white font-bold text-2xl absolute p-3">
                   {category.name}
                 </p>
-                <div className="absolute bottom-3 right-3 bg-pace-white/20 rounded-xl py-2 px-1">
-                  <ArrowUpRight />
-                </div>
+
+                <ArrowUpRight
+                  className="absolute bottom-3 right-3"
+                  color="#F9F9FF"
+                />
               </div>
             ))}
         </div>

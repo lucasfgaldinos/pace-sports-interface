@@ -16,7 +16,10 @@
 @layer base {
   * {
     font-family: "Inter", sans-serif;
-    outline: none;
-    color: var(--color-dark);
+    @apply outline-none text-dark;
+  }
+
+  body {
+    @apply bg-pace-white;
   }
 }
