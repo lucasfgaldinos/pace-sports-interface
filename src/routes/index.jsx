@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router';
+import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { Home } from '../containers/Home';
 import { Login } from '../containers/Login';
@@ -6,15 +7,6 @@ import { Products } from '../containers/Products';
 import { Register } from '../containers/Register';
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <>
-        <Header />
-        <Home />
-      </>
-    ),
-  },
   {
     path: '/login',
     element: <Login />,
@@ -24,7 +16,23 @@ export const router = createBrowserRouter([
     element: <Register />,
   },
   {
+    path: '/',
+    element: (
+      <>
+        <Header />
+        <Home />
+        <Footer />
+      </>
+    ),
+  },
+  {
     path: '/produtos',
-    element: <Products />,
+    element: (
+      <>
+        <Header />
+        <Products />
+        <Footer />
+      </>
+    ),
   },
 ]);
