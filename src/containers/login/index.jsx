@@ -8,9 +8,11 @@ import loginBanner from '../../assets/login-960.webp';
 import logoPaceSports from '../../assets/pace-sports-branco-rascunho.png';
 import { Button } from '../../components/button';
 import { Input } from '../../components/input';
+import { useUser } from '../../hooks/user-context';
 import { api } from '../../services/api';
 
 export const Login = () => {
+  const { putUserData } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const schema = yup
@@ -53,9 +55,8 @@ export const Login = () => {
         { validateStatus: () => true },
       );
 
-      localStorage.setItem('token', response.data.token);
-
       if (response.status === 200 || response.status === 201) {
+        putUserData(response.data);
         toast.success('Seja muito bem-vindo(a)!');
         navigate('/');
       } else if (response.status === 401) {
@@ -120,7 +121,9 @@ export const Login = () => {
           </div>
 
           <div className="my-8">
-            <Button onClick={() => navigate('/cadastro')}>Cadastre-se</Button>
+            <Button variant="secondary" onClick={() => navigate('/cadastro')}>
+              Cadastre-se
+            </Button>
           </div>
 
           <p className="text-[10px] text-neutral text-center">
