@@ -1,6 +1,6 @@
 import { ShoppingCartPlus } from 'lucide-react';
-import { formatCurrency } from '../utils/format-currency';
-import { Button } from './button';
+import { formatCurrency } from '../utils/formatCurrency';
+import { Button } from './Button';
 
 export const ProductCard = ({ product, ...props }) => {
   return (

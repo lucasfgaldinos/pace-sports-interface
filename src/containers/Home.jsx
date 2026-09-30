@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import homeBanner from '../../assets/centro-esportivo-desktop-1536.webp';
-import { Button } from '../../components/button';
-import { api } from '../../services/api';
+import { Button } from '../components/Button';
+import { api } from '../services/api';
 
 export const Home = () => {
   const [categories, setCategories] = useState([]);

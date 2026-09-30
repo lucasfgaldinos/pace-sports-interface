@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
-import { ProductCard } from '../../components/product-card';
-import { api } from '../../services/api';
+import { ProductCard } from '../components/ProductCard';
+import { api } from '../services/api';
 
 export const Products = () => {
   const [categories, setCategories] = useState([]);

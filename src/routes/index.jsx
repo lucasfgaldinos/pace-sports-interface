@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router';
-import { Home } from '../containers/home';
-import { Login } from '../containers/login';
-import { Products } from '../containers/products';
-import { Register } from '../containers/register';
+import { Home } from '../containers/Home';
+import { Login } from '../containers/Login';
+import { Products } from '../containers/Products';
+import { Register } from '../containers/Register';
 
 export const router = createBrowserRouter([
   {
