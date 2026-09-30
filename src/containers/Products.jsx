@@ -63,7 +63,7 @@ export const Products = () => {
 
   return (
     <div>
-      <div className="w-full max-w-5xl mx-auto px-10 pt-10 ">
+      <div className="w-full max-w-5xl mx-auto px-10 pt-30 ">
         <span className="text-neutral flex items-center gap-2 text-sm">
           Home
           <ChevronRight className="ml-3" color="#6B7280" size={14} />

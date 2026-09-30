@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
     if (userInfoLocalStorage) {
       setUserInfo(JSON.parse(userInfoLocalStorage));
     }
-  });
+  }, []);
 
   return (
     <UserContext.Provider value={{ userInfo, putUserData, logout }}>
