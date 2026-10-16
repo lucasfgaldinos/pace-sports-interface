@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import homeBanner from '../assets/centro-esportivo-desktop-1536.webp';
-import { Button } from '../components/Button';
+import { Button } from '../components';
 import { api } from '../services/api';
 
 export const Home = () => {

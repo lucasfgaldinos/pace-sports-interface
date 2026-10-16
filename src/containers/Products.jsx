@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { twMerge } from 'tailwind-merge';
-import { ProductCard } from '../components/ProductCard';
+import { ProductCard } from '../components';
 import { api } from '../services/api';
 
 export const Products = () => {
@@ -62,7 +62,7 @@ export const Products = () => {
   }, [products, activeCategory]);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div className="w-full max-w-5xl mx-auto px-10 pt-30 ">
         <span className="text-neutral flex items-center gap-2 text-sm">
           Home

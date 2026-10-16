@@ -6,8 +6,7 @@ import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import loginBanner from '../assets/login-960.webp';
 import logoPaceSports from '../assets/pace-sports-branco-rascunho.png';
-import { Button } from '../components/Button';
-import { Input } from '../components/Input';
+import { Button, Input } from '../components';
 import { useUser } from '../hooks/UserContext';
 import { api } from '../services/api';
 

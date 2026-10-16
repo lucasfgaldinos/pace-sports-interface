@@ -1,8 +1,11 @@
 import { ShoppingCartPlus } from 'lucide-react';
+import { useCart } from '../hooks/CartContext';
 import { formatCurrency } from '../utils/formatCurrency';
 import { Button } from './Button';
 
 export const ProductCard = ({ product, ...props }) => {
+  const { addProductToCard } = useCart();
+
   return (
     <div {...props} className="shadow-sm w-full rounded-xl">
       <div
@@ -21,7 +24,11 @@ export const ProductCard = ({ product, ...props }) => {
           <p className="font-extrabold text-lg">
             {formatCurrency(product.price)}
           </p>
-          <Button size="icon" title="Adicionar ao carrinho">
+          <Button
+            onClick={() => addProductToCard(product)}
+            size="icon"
+            title="Adicionar ao carrinho"
+          >
             <ShoppingCartPlus color="#F9F9FF" size={24} />
           </Button>
         </div>

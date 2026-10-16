@@ -1,5 +1,6 @@
 import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
 import { Link, useNavigate, useResolvedPath } from 'react-router';
+import { twMerge } from 'tailwind-merge';
 import logoPaceSports from '../assets/ps-verde.png';
 import { useUser } from '../hooks/UserContext';
 
@@ -34,8 +35,11 @@ export const Header = ({ ...props }) => {
           <nav className="flex items-center gap-6 h-18">
             <Link
               to={'/produtos'}
-              className={`font-bold content-center
-              ${pathname.includes('/') && 'text-secondary border-b-2 h-full'}`}
+              className={twMerge(
+                'font-bold content-center text-dark/80 border-2 h-full border-transparent px-1 hover:bg-primary/10 transition-all',
+                pathname.includes('produtos') &&
+                  'text-secondary border-b-secondary bg-primary/10',
+              )}
             >
               Produtos
             </Link>
@@ -45,8 +49,8 @@ export const Header = ({ ...props }) => {
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <div className="p-2 border border-secondary rounded-full bg-secondary/20">
-                <UserRound color="#005321" size={20} strokeWidth={2.5} />
+              <div className="p-2 border border-secondary rounded-full bg-primary/10">
+                <UserRound color="#005321" size={20} />
               </div>
 
               <p className="max-w-32.5 text-sm text-nowrap overflow-hidden text-ellipsis">
@@ -68,10 +72,15 @@ export const Header = ({ ...props }) => {
 
           <div className="h-8 border-l border-label/30 w-px" />
           <button
+            onClick={() => navigate('/carrinho')}
             type="button"
-            className="p-2 rounded-full cursor-pointer hover:bg-secondary/20 transition-all active:scale-95"
+            className={twMerge(
+              'p-3 rounded-full cursor-pointer hover:bg-primary/10 transition-all active:scale-95 border-2 border-transparent',
+              pathname.includes('carrinho') &&
+                'bg-primary/10 border-b-secondary',
+            )}
           >
-            <ShoppingCart color="#005321" size={20} strokeWidth={2.5} />
+            <ShoppingCart color="#005321" />
           </button>
         </div>
       </div>
