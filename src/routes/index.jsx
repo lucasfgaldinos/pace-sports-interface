@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router';
 import { Footer, Header } from '../components';
 import { Cart, Home, Login, Products, Register } from '../containers';
+import { Checkout } from '../containers/Checkout';
+import { CheckoutCompleted } from '../containers/CheckoutCompleted';
 
 export const router = createBrowserRouter([
   {
@@ -37,6 +39,26 @@ export const router = createBrowserRouter([
       <>
         <Header />
         <Cart />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: '/checkout',
+    element: (
+      <>
+        <Header />
+        <Checkout />
+        <Footer />
+      </>
+    ),
+  },
+  {
+    path: '/checkout-completo',
+    element: (
+      <>
+        <Header />
+        <CheckoutCompleted />
         <Footer />
       </>
     ),

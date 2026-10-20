@@ -1,5 +1,6 @@
 import { LockKeyhole } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { Button } from '../components';
 import { useCart } from '../hooks/CartContext';
@@ -7,34 +8,42 @@ import { api } from '../services/api';
 import { formatCurrency } from '../utils/formatCurrency';
 
 export const CartResume = () => {
-  const { cartProducts, clearCart } = useCart();
+  const { cartProducts } = useCart();
   const [deliveryTax, _setDeliveryTax] = useState(0);
   const [discount, _setDiscount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState({});
+  const navigate = useNavigate();
 
   const submitOrder = async () => {
     setIsLoading(true);
+    const products = cartProducts.map((product) => {
+      return {
+        id: product.id,
+        quantity: product.quantity,
+        price: product.price,
+      };
+    });
 
     try {
-      const { status } = await api.post(
-        '/orders',
+      const { status, data } = await api.post(
+        '/create-payment-intent',
         { products },
         { validateStatus: () => true },
       );
 
       if (status === 201 || status === 200) {
-        clearCart();
-        toast.success('Seu pedido foi realizado com sucesso');
+        navigate('/checkout', {
+          state: data,
+        });
       } else {
         throw new Error();
       }
     } catch (_err) {
-      toast.error('Algo deu errado ao finalizar sua compra');
+      toast.error('Algo deu errado, tente novamente.');
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -43,15 +52,6 @@ export const CartResume = () => {
     }, 0);
 
     setTotalPrice(totalProductsValue);
-
-    const newProducts = cartProducts.map((product) => {
-      return {
-        id: product.id,
-        quantity: product.quantity,
-      };
-    });
-
-    setProducts(newProducts);
   }, [cartProducts]);
 
   return (
