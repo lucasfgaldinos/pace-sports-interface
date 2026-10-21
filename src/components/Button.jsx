@@ -1,3 +1,4 @@
+import { Loader } from 'lucide-react';
 import { tv } from 'tailwind-variants';
 
 const buttonVariants = tv({
@@ -6,6 +7,10 @@ const buttonVariants = tv({
     variant: {
       secondary:
         'bg-transparent border border-dark hover:bg-neutral/10 text-dark',
+    },
+    isLoading: {
+      true: 'cursor-notall cursor-not-allowed bg-neutral hover:bg-neutral',
+      false: '',
     },
     size: {
       icon: 'w-fit h-auto p-2.5',
@@ -16,6 +21,7 @@ const buttonVariants = tv({
 
 export const Button = ({
   children,
+  disabled,
   variant,
   size,
   type = 'button',
@@ -25,11 +31,15 @@ export const Button = ({
   return (
     <button
       {...props}
-      disabled={isLoading}
+      disabled={disabled || isLoading}
       type={type}
-      className={buttonVariants({ variant, size })}
+      className={buttonVariants({ variant, size, isLoading })}
     >
-      {children}
+      {isLoading ? (
+        <Loader className="animate-spin" color="#F9F9FF" size={20} />
+      ) : (
+        children
+      )}
     </button>
   );
 };

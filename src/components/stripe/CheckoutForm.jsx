@@ -3,7 +3,6 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
-import { LoaderCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -97,11 +96,7 @@ export const CheckoutForm = () => {
       <PaymentElement options={{ layout: 'accordion' }} />
       <div className="mt-6">
         <Button type="submit" disabled={isLoading || !stripe || !elements}>
-          {isLoading ? (
-            <LoaderCircle className="animate-spin" />
-          ) : (
-            'Pagar agora'
-          )}
+          Pagar agora
         </Button>
       </div>
       <p className="py-4 text-neutral">
