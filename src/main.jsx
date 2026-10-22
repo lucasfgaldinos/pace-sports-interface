@@ -2,7 +2,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
-import { Slide, ToastContainer } from 'react-toastify';
+import { Flip, ToastContainer } from 'react-toastify';
 import { stripePromise } from './config/stripeConfig';
 import { AppProvider } from './hooks';
 import { Router } from './routes';
@@ -15,7 +15,12 @@ createRoot(document.getElementById('root')).render(
           <Router />
         </BrowserRouter>
       </Elements>
-      <ToastContainer position="top-center" transition={Slide} />
+      <ToastContainer
+        position="top-right"
+        autoClose={2500}
+        transition={Flip}
+        theme="colored"
+      />
     </AppProvider>
   </StrictMode>,
 );
