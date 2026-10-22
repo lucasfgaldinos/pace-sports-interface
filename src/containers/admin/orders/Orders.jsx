@@ -51,20 +51,25 @@ export const Orders = () => {
   return (
     <div className="p-10 h-dvh">
       <div className="h-full overflow-clip overflow-y-auto border border-neutral/20 shadow rounded-lg">
-        <TableContainer component={Paper}>
+        <TableContainer className="min-h-full" component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow>
                 <TableCell />
                 <TableCell>Pedido</TableCell>
-                <TableCell align="right">Cliente</TableCell>
-                <TableCell align="right">Data do pedido</TableCell>
-                <TableCell align="right">Status</TableCell>
+                <TableCell>Cliente</TableCell>
+                <TableCell>Data do pedido</TableCell>
+                <TableCell>Status</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {rows.map((row) => (
-                <Row key={row.orderId} row={row} />
+                <Row
+                  key={row.orderId}
+                  row={row}
+                  orders={orders}
+                  setOrders={setOrders}
+                />
               ))}
             </TableBody>
           </Table>

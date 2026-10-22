@@ -10,11 +10,42 @@ import Typography from '@mui/material/Typography';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useId, useState } from 'react';
+import Select from 'react-select';
+import { toast } from 'react-toastify';
+import { api } from '../../../services/api';
+import { formatDate } from '../../../utils/formatDate';
+import { orderStatusOptions } from './orderStatusOptions';
 
-export const Row = (props) => {
-  const { row } = props;
+export const Row = ({ row, orders, setOrders }) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const detailsId = useId();
+
+  async function handleChangeSelect(orderId, newOrderStatus) {
+    try {
+      setIsLoading(true);
+      const { status } = await api.patch(
+        `/orders/${orderId}`,
+        { status: newOrderStatus },
+        { validateStatus: () => true },
+      );
+
+      if (status === 200) {
+        toast.success('Status do pedido atualizado');
+        const newOrders = orders.map((order) =>
+          order._id === orderId ? { ...order, status: newOrderStatus } : order,
+        );
+        console.log(newOrders);
+        setOrders(newOrders);
+      } else {
+        throw new Error('Algo deu errado ao atualizar status do pedido');
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <>
@@ -33,9 +64,20 @@ export const Row = (props) => {
         <TableCell component="th" scope="row">
           {row.orderId}
         </TableCell>
-        <TableCell align="right">{row.name}</TableCell>
-        <TableCell align="right">{row.date}</TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{formatDate(row.date)}</TableCell>
+        <TableCell>
+          <Select
+            isLoading={isLoading}
+            className="w-62"
+            placeholder="Status"
+            defaultValue={orderStatusOptions.find(
+              (item) => item.value === row.status,
+            )}
+            options={orderStatusOptions.filter((option) => option.id !== 0)}
+            onChange={(status) => handleChangeSelect(row.orderId, status.value)}
+          />
+        </TableCell>
       </TableRow>
       <TableRow id={detailsId} aria-hidden={!open ? true : undefined}>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -49,9 +91,9 @@ export const Row = (props) => {
                   <TableRow>
                     <TableCell>id</TableCell>
                     <TableCell>Nome</TableCell>
-                    <TableCell>Quantidade</TableCell>
-                    <TableCell align="right">Categoria</TableCell>
-                    <TableCell align="right" />
+                    <TableCell align="center">Quantidade</TableCell>
+                    <TableCell>Categoria</TableCell>
+                    <TableCell>Imagem</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -61,11 +103,11 @@ export const Row = (props) => {
                         {product.id}
                       </TableCell>
                       <TableCell>{product.name}</TableCell>
-                      <TableCell>{product.quantity}</TableCell>
-                      <TableCell align="right">{product.category}</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">{product.quantity}</TableCell>
+                      <TableCell>{product.category}</TableCell>
+                      <TableCell>
                         <img
-                          className="max-w-8"
+                          className="max-w-16"
                           src={product.url}
                           alt={`Imagem do ${product.name}`}
                         />
