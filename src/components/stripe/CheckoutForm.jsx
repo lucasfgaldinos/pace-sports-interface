@@ -95,7 +95,11 @@ export const CheckoutForm = () => {
     <form className="max-w-xl w-full mx-auto" onSubmit={handleSubmit}>
       <PaymentElement options={{ layout: 'accordion' }} />
       <div className="mt-6">
-        <Button type="submit" disabled={isLoading || !stripe || !elements}>
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          disabled={isLoading || !stripe || !elements}
+        >
           Pagar agora
         </Button>
       </div>

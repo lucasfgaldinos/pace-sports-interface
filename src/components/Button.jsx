@@ -9,7 +9,7 @@ const buttonVariants = tv({
         'bg-transparent border border-dark hover:bg-neutral/10 text-dark',
     },
     isLoading: {
-      true: 'cursor-notall cursor-not-allowed bg-neutral hover:bg-neutral',
+      true: 'cursor-notall cursor-not-allowed bg-neutral hover:bg-neutral active:scale-100',
       false: '',
     },
     size: {
