@@ -57,7 +57,9 @@ export const Login = () => {
       if (response.status === 200 || response.status === 201) {
         putUserData(response.data);
         toast.success('Seja muito bem-vindo(a)!');
-        navigate('/');
+
+        if (response?.data?.is_admin) navigate('/admin/pedidos');
+        else navigate('/');
       } else if (response.status === 401) {
         toast.error('Email e/ou senha incorretos!');
       } else {

@@ -5,4 +5,5 @@ export * from './Footer';
 export * from './Header';
 export * from './Input';
 export * from './ProductCard';
+export * from './SideNavAdmin';
 export * from './stripe/CheckoutForm';
