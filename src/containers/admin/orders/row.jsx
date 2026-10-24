@@ -35,13 +35,12 @@ export const Row = ({ row, orders, setOrders }) => {
         const newOrders = orders.map((order) =>
           order._id === orderId ? { ...order, status: newOrderStatus } : order,
         );
-        console.log(newOrders);
         setOrders(newOrders);
       } else {
         throw new Error('Algo deu errado ao atualizar status do pedido');
       }
-    } catch (err) {
-      toast.error(err.message);
+    } catch (_err) {
+      toast.error('Algo deu errado ao atualizar status do pedido');
     } finally {
       setIsLoading(false);
     }
@@ -68,6 +67,7 @@ export const Row = ({ row, orders, setOrders }) => {
         <TableCell>{formatDate(row.date)}</TableCell>
         <TableCell>
           <Select
+            menuPlacement={'auto'}
             isLoading={isLoading}
             className="w-62"
             placeholder="Status"

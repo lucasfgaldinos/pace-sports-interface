@@ -8,7 +8,7 @@ export const AdminLayout = () => {
 
   return isAdmin ? (
     <main
-      className="min-h-screen grid"
+      className="min-h-screen grid overflow-y-clip"
       style={{ gridTemplateColumns: 'minmax(200px, 300px) 1fr' }}
     >
       <SideNavAdmin />
