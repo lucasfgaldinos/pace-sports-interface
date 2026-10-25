@@ -9,7 +9,6 @@ import { SquarePen, Trash } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
-import { Button } from '../../components';
 import { api } from '../../services/api';
 import { formatCurrency } from '../../utils/formatCurrency';
 
@@ -26,7 +25,6 @@ export const ListProducts = () => {
 
         if (status === 200) {
           setProducts(data);
-          console.log(data);
         } else throw new Error();
       } catch (_err) {
         toast.error('Algo deu errado ao listar os produtos');
