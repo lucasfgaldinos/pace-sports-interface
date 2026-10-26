@@ -2,6 +2,7 @@ import { LogOut, ShoppingCart, UserRound } from 'lucide-react';
 import { Link, useNavigate, useResolvedPath } from 'react-router';
 import { twMerge } from 'tailwind-merge';
 import logoPaceSports from '../assets/ps-verde.png';
+import { useCart } from '../hooks/CartContext';
 import { useUser } from '../hooks/UserContext';
 
 export const Header = ({ ...props }) => {
@@ -10,6 +11,7 @@ export const Header = ({ ...props }) => {
     userInfo: { name },
     logout,
   } = useUser();
+  const { cartProducts } = useCart();
   const navigate = useNavigate();
 
   function logoutUser() {
@@ -75,12 +77,17 @@ export const Header = ({ ...props }) => {
             onClick={() => navigate('/carrinho')}
             type="button"
             className={twMerge(
-              'p-3 rounded-full cursor-pointer hover:bg-primary/10 transition-all active:scale-95 border-2 border-transparent',
+              'relative p-3 rounded-full cursor-pointer hover:bg-primary/10 transition-all active:scale-95 border-2 border-transparent',
               pathname.includes('carrinho') &&
                 'bg-primary/10 border-b-secondary',
             )}
           >
             <ShoppingCart color="#005321" />
+            {cartProducts.length > 0 && (
+              <div className="w-3.5 h-3.5 bg-pace-red rounded-full absolute top-1.5 right-1.5 flex items-center justify-center text-pace-white text-[10px]">
+                {cartProducts.length}
+              </div>
+            )}
           </button>
         </div>
       </div>
